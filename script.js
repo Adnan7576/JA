@@ -135,3 +135,53 @@ document.addEventListener("DOMContentLoaded", () => {
   if(document.getElementById("courses-container")) renderHomePage();
   if(document.getElementById("course-title")) renderCourseDetail();
 });
+
+
+// ======== Navbar JS ========
+
+const menuBtn = document.getElementById("menu-btn");
+const closeBtn = document.getElementById("close-btn");
+const drawer = document.getElementById("drawer");
+const overlay = document.getElementById("overlay");
+const navbar = document.getElementById("navbar");
+
+// Open mobile drawer
+menuBtn.addEventListener("click", () => {
+  drawer.classList.remove("translate-x-full");
+  overlay.classList.remove("hidden");
+  setTimeout(() => overlay.classList.add("opacity-50"), 10);
+});
+
+// Close mobile drawer
+function closeDrawer() {
+  drawer.classList.add("translate-x-full");
+  overlay.classList.remove("opacity-50");
+  setTimeout(() => overlay.classList.add("hidden"), 300);
+}
+
+closeBtn.addEventListener("click", closeDrawer);
+overlay.addEventListener("click", closeDrawer);
+
+// Optional: Smooth scroll for drawer links
+document.querySelectorAll("#drawer-links a").forEach(link => {
+  link.addEventListener("click", (e) => {
+    const targetId = link.getAttribute("href").replace("#", "");
+    const targetSection = document.getElementById(targetId);
+    if(targetSection) {
+      e.preventDefault();
+      targetSection.scrollIntoView({ behavior: "smooth" });
+      closeDrawer();
+    }
+  });
+});
+
+// Optional: Change navbar background on scroll
+window.addEventListener("scroll", () => {
+  if(window.scrollY > 50) {
+    navbar.classList.add("bg-white", "shadow");
+    navbar.classList.remove("bg-transparent");
+  } else {
+    navbar.classList.remove("bg-white", "shadow");
+    navbar.classList.add("bg-transparent");
+  }
+});
