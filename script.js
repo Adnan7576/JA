@@ -75,6 +75,7 @@ function generateHeroSlides(courses) {
 }
 
 // ======== Render Course Detail ========
+// ======== Render Course Detail ========
 async function renderCourseDetail() {
   const courses = await fetchCourses();
   const params = new URLSearchParams(window.location.search);
@@ -88,13 +89,14 @@ async function renderCourseDetail() {
 
   document.getElementById("course-title").textContent = course.title;
   document.getElementById("course-subtitle").textContent = course.subtitle;
-  
-  // Render multi-line description
+
   const courseDescription = document.getElementById("course-description");
-  courseDescription.innerHTML = course.description
-    .split("\n")
-    .map(line => `<p class="mb-2">${line}</p>`)
-    .join("");
+  if(courseDescription){
+    courseDescription.innerHTML = course.description
+      .split("\n")
+      .map(line => `<p class="mb-2">${line}</p>`)
+      .join("");
+  }
 
   document.getElementById("course-thumbnail").src = course.thumbnail;
   document.getElementById("enrolled").textContent = course.enrolled;
@@ -104,26 +106,53 @@ async function renderCourseDetail() {
 
   // Features
   const featuresContainer = document.getElementById("course-features");
-  featuresContainer.innerHTML = "";
-  course.features.forEach(feature => {
-    const div = document.createElement("div");
-    div.className = "flex items-center gap-3 rounded-xl bg-gray-50 p-4 shadow transition duration-300 hover:scale-[1.02] hover:shadow-lg";
-    div.innerHTML = `<i class="fas fa-check-circle text-xl text-blue-600"></i> <span class="text-lg font-medium text-gray-700">${feature}</span>`;
-    featuresContainer.appendChild(div);
-  });
-
-  // Enroll button
-  const enrollBtn = document.querySelector(".enroll-btn");
-  if (enrollBtn) {
-    enrollBtn.addEventListener("click", () => {
-      if (course.enrolledBtn) {
-        window.open(course.enrolledBtn, "_blank");
-      } else {
-        openWhatsApp();
-      }
+  if(featuresContainer){
+    featuresContainer.innerHTML = "";
+    course.features.forEach(feature => {
+      const div = document.createElement("div");
+      div.className = "flex items-center gap-3 rounded-xl bg-gray-50 p-4 shadow transition duration-300 hover:scale-[1.02] hover:shadow-lg";
+      div.innerHTML = `<i class="fas fa-check-circle text-xl text-blue-600"></i> <span class="text-lg font-medium text-gray-700">${feature}</span>`;
+      featuresContainer.appendChild(div);
     });
   }
+
+  // Enroll button logic
+ const enrollBtn = document.querySelector(".enroll-btn");
+const enrollContainer = document.getElementById("enroll-container");
+
+if (enrollBtn && enrollContainer) {
+  enrollBtn.addEventListener("click", () => {
+    // Remove previous payment div if exists
+    const existingDiv = document.getElementById("payment-div");
+    if (existingDiv) existingDiv.remove();
+
+    if (!course.enrolledBtn && (course.payment === "Nagad/Bkash" || course.payment === "bkash")) {
+      const paymentDiv = document.createElement("div");
+      paymentDiv.id = "payment-div";
+      paymentDiv.className = "mt-4 p-4 bg-yellow-100 rounded-lg shadow flex flex-col items-center gap-3";
+
+      const paymentType = course.payment.charAt(0).toUpperCase() + course.payment.slice(1); // Nagad/Bkash
+      const number = course.number || "Not Provided";
+
+      paymentDiv.innerHTML = `
+        <p class="text-lg font-semibold">${paymentType} Number: ${number}</p>
+        <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition" onclick="window.open('${course.formLink}', '_blank')">
+          Fill Google Form
+        </button>
+      `;
+
+      enrollContainer.appendChild(paymentDiv);
+
+    } else if (course.enrolledBtn) {
+      window.open(course.enrolledBtn, "_blank");
+    } else {
+      openWhatsApp();
+    }
+  });
 }
+
+}
+
 
 // ======== Social Links ========
 function openWhatsApp() { window.open("https://wa.me/8801571748528","_blank"); }
