@@ -49,8 +49,8 @@ function generateHeroSlides(courses) {
     slide.innerHTML = `
       <div class="absolute inset-0 bg-black/50"></div>
       <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
-        <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">${course.title}</h1>
-        <p class="text-lg md:text-xl max-w-2xl mx-auto text-gray-200 mb-8">${course.subtitle}</p>
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight font-bangla">${course.title}</h1>
+        <p class="text-lg md:text-2xl font-bold max-w-2xl mx-auto text-gray-200 mb-8 font-bangla">${course.subtitle}</p>
         <button onclick="window.location='${course.link}'" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg text-lg shadow-lg transition">
           View Course
         </button>
@@ -68,7 +68,7 @@ function generateHeroSlides(courses) {
   new Swiper(".hero-swiper", {
     loop: true,
     speed: 1000,
-    autoplay: { delay: 5000, disableOnInteraction: false },
+    autoplay: { delay: 3000, disableOnInteraction: false },
     pagination: { el: ".swiper-pagination", clickable: true },
     effect: "slide",
   });
@@ -173,6 +173,7 @@ const closeBtn = document.getElementById("close-btn");
 const drawer = document.getElementById("drawer");
 const overlay = document.getElementById("overlay");
 const navbar = document.getElementById("navbar");
+const logo = document.getElementById("logo");
 
 // Open mobile drawer
 menuBtn.addEventListener("click", () => {
@@ -206,11 +207,13 @@ document.querySelectorAll("#drawer-links a").forEach(link => {
 
 // Optional: Change navbar background on scroll
 window.addEventListener("scroll", () => {
-  if(window.scrollY > 50) {
-    navbar.classList.add("bg-white", "shadow");
+  if (window.scrollY > 50) {
+    // When scrolling down
+    navbar.classList.add("bg-blue-500", "shadow");
     navbar.classList.remove("bg-transparent");
   } else {
-    navbar.classList.remove("bg-white", "shadow");
+    // When scrolling up
+    navbar.classList.remove("bg-blue-500", "shadow");
     navbar.classList.add("bg-transparent");
   }
 });
