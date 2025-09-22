@@ -1,6 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@100..800&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
 
-.font-bangla {
+.font-anek {
+      font-family: "Anek Bangla", sans-serif;
+}
+
+
+
+.font-hind {
       font-family: "Hind Siliguri", sans-serif;
 
 }

@@ -49,8 +49,8 @@ function generateHeroSlides(courses) {
     slide.innerHTML = `
       <div class="absolute inset-0 bg-black/50"></div>
       <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
-        <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight font-bangla">${course.title}</h1>
-        <p class="text-lg md:text-2xl font-bold max-w-2xl mx-auto text-gray-200 mb-8 font-bangla">${course.subtitle}</p>
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight font-anek">${course.title}</h1>
+        <p class="text-lg md:text-2xl font-bold max-w-2xl mx-auto text-gray-200 mb-8 font-anek">${course.subtitle}</p>
         <button onclick="window.location='${course.link}'" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg text-lg shadow-lg transition">
           View Course
         </button>
